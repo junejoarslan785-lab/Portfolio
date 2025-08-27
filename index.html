@@ -1,922 +1,957 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abdullah Alias Arslan - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #0a0a0a;
-            color: #e5e7eb;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-        body.no-scroll { overflow: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abdullah Alias Arslan - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { overflow-x: hidden; } /* prevent sideways scroll on mobile */
 
-        /* Navigation Styles */
-        nav {
-            background-color: rgba(0, 0, 0, 0.95);
-            border-bottom: 1px solid #1a1a1a;
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .nav-logo {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #d1d5db;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: #ffffff; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0a0a;
+      color: #e5e7eb;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    body.no-scroll { overflow: hidden; }
 
-        /* Hamburger (mobile) */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            padding: 6px;
-            border: 1px solid transparent;
-            background: transparent;
-            border-radius: 6px;
-        }
-        .hamburger span {
-            width: 25px; height: 3px; background: #ffffff; margin: 3px 0;
-            transition: 0.3s; border-radius: 2px;
-        }
-        .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+    /* Navigation */
+    nav {
+      background-color: rgba(0, 0, 0, 0.95);
+      border-bottom: 1px solid #1a1a1a;
+      backdrop-filter: blur(10px);
+      padding: 15px 20px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px; /* keep space between logo and hamburger */
+    }
+    .nav-logo {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
 
-        /* Mobile Navigation (updated to slide + overlay) */
-        .mobile-nav {
-            position: fixed;
-            top: 70px; left: 0; right: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.98);
-            backdrop-filter: blur(20px);
-            z-index: 1001;
-            padding: 20px 0;
-            border-bottom: 1px solid #1a1a1a;
-            transform: translateY(-10px);
-            opacity: 0;
-            pointer-events: none;
-            transition: transform .3s ease, opacity .3s ease;
-        }
-        .mobile-nav.active {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .mobile-nav ul { list-style: none; text-align: center; }
-        .mobile-nav ul li { margin: 15px 0; }
-        .mobile-nav ul li a {
-            color: #d1d5db; text-decoration: none; font-size: 1.1rem; font-weight: 500;
-            transition: color 0.3s;
-        }
-        .mobile-nav ul li a:hover { color: #ffffff; }
+      /* ensure logo shrinks and never pushes hamburger off-screen */
+      flex: 1 1 auto;
+      min-width: 0;           /* critical for ellipsis */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #d1d5db;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #ffffff; }
 
-        /* Dim overlay behind mobile menu */
-        .nav-overlay {
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            opacity: 0; pointer-events: none;
-            transition: opacity .3s ease;
-        }
-        .nav-overlay.active { opacity: 1; pointer-events: auto; }
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 6px;
+      border: 1px solid transparent;
+      background: transparent;
+      border-radius: 6px;
 
-        /* Header Styles */
-        header {
-            min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            background: radial-gradient(circle at top, #0f0f0f, #000);
-            color: #fff; text-align: center; position: relative;
-            padding: 2rem; padding-top: 100px;
-        }
-        header h1 {
-            font-size: 3.2rem; font-weight: 800; letter-spacing: 3px; font-family: 'Orbitron', sans-serif;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, rgba(255,255,255,0.15), #ffffff, rgba(255,255,255,0.15));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,0.05);
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        @keyframes glow {
-            from { text-shadow: 0 0 5px rgba(255,255,255,0.1), 0 0 10px rgba(255,255,255,0.05); }
-            to { text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 25px rgba(255,255,255,0.1); }
-        }
-        header h2 { font-size: 1.4rem; font-weight: 400; color: #bbb; margin-bottom: 3rem; letter-spacing: 1.2px; }
+      /* don't let it shrink away */
+      flex: 0 0 auto;
+    }
+    .hamburger span {
+      width: 25px; height: 3px; background: #ffffff; margin: 3px 0;
+      transition: 0.3s; border-radius: 2px;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(-45deg) translate(-5px, 6px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(45deg) translate(-5px, -6px); }
+    .hamburger:focus-visible { outline: 2px solid #2563eb; outline-offset: 2px; }
 
-        /* Cards layout */
-        .cards {
-            display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;
-        }
-        .card {
-            background: rgba(20,20,20,0.9); padding: 1.5rem; border-radius: 12px; width: 300px;
-            box-shadow: 0 0 20px rgba(255,255,255,0.08);
-            transition: transform 0.3s, box-shadow 0.3s; overflow: hidden;
-        }
-        .card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 0 25px rgba(255,255,255,0.15); }
-        .card .icon { font-size: 2rem; margin-bottom: 1rem; }
-        .card h3 { margin: 1rem 0 0.5rem; font-size: 1.3rem; font-weight: 600; color: #fff; }
-        .card p { font-size: 0.95rem; color: #bbb; line-height: 1.5; }
+    /* Mobile Navigation (slide + overlay) */
+    .mobile-nav {
+      position: fixed;
+      top: 70px; left: 0; right: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.98);
+      backdrop-filter: blur(20px);
+      z-index: 1001;
+      padding: 20px 0;
+      border-bottom: 1px solid #1a1a1a;
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform .3s ease, opacity .3s ease;
+    }
+    .mobile-nav.active {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .mobile-nav ul { list-style: none; text-align: center; }
+    .mobile-nav ul li { margin: 15px 0; }
+    .mobile-nav ul li a {
+      color: #d1d5db; text-decoration: none; font-size: 1.1rem; font-weight: 500;
+      transition: color 0.3s;
+    }
+    .mobile-nav ul li a:hover { color: #ffffff; }
 
-        /* Download CV button */
-        .btn-cv {
-            display: inline-block; margin-top: 2rem; padding: 12px 24px; border-radius: 6px;
-            font-size: 1rem; font-weight: bold; color: #000; background: #fff; text-decoration: none;
-            transition: background 0.3s, transform 0.3s;
-        }
-        .btn-cv i { margin-right: 8px; }
-        .btn-cv:hover { background: #111; color: #fff; transform: scale(1.05); }
+    /* Dim overlay behind mobile menu */
+    .nav-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease;
+    }
+    .nav-overlay.active { opacity: 1; pointer-events: auto; }
 
-        /* Social Links */
-        .social-links { display: flex; gap: 1.5rem; margin-top: 3rem; justify-content: center; }
-        .social-links a {
-            font-size: 1.5rem; color: #bbb; border: 1px solid #1f2937; padding: 0.6rem; border-radius: 10px;
-            transition: all 0.3s ease;
-        }
-        .social-links a:hover { color: #fff; border-color: #2563eb; transform: scale(1.2); }
+    /* Header */
+    header {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: radial-gradient(circle at top, #0f0f0f, #000);
+      color: #fff; text-align: center; position: relative;
+      padding: 2rem; padding-top: 100px;
+    }
+    header h1 {
+      font-size: 3.2rem; font-weight: 800; letter-spacing: 3px; font-family: 'Orbitron', sans-serif;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, rgba(255,255,255,0.15), #ffffff, rgba(255,255,255,0.15));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(255,255,255,0.1), 0 0 20px rgba(255,255,255,0.05);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 5px rgba(255,255,255,0.1), 0 0 10px rgba(255,255,255,0.05); }
+      to { text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 25px rgba(255,255,255,0.1); }
+    }
+    header h2 { font-size: 1.4rem; font-weight: 400; color: #bbb; margin-bottom: 3rem; letter-spacing: 1.2px; }
 
-        /* Education Section */
-        #education { padding: 6rem 2rem; background: #0f0f0f; text-align: center; }
-        #education h2 {
-            font-size: 3rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 2.5rem;
-            background: linear-gradient(to right, #fff, #9ca3af, #fff);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-family: 'Poppins', sans-serif;
-        }
-        #education .card {
-            background: linear-gradient(145deg, #111, #1a1a1a); border-radius: 18px; padding: 2.5rem 3rem; max-width: 750px;
-            text-align: left; box-shadow: 0 0 25px rgba(59,130,246,0.25);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        #education .card:hover { transform: translateY(-8px); box-shadow: 0 0 35px rgba(59,130,246,0.45); }
+    /* Cards */
+    .cards {
+      display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .card {
+      background: rgba(20,20,20,0.9); padding: 1.5rem; border-radius: 12px; width: 300px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.08);
+      transition: transform 0.3s, box-shadow 0.3s; overflow: hidden;
+    }
+    .card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 0 25px rgba(255,255,255,0.15); }
+    .card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 { margin: 1rem 0 0.5rem; font-size: 1.3rem; font-weight: 600; color: #fff; }
+    .card p { font-size: 0.95rem; color: #bbb; line-height: 1.5; }
 
-        /* Skills Section */
-        #skills { padding: 6rem 2rem; background: #0f0f0f; text-align: center; }
-        #skills h2 {
-            font-size: 2.8rem; font-weight: 800; margin-bottom: 3rem; font-family: 'Poppins', sans-serif;
-            color: #e5e7eb; text-shadow: 2px 2px 6px rgba(0,0,0,0.8), -1px -1px 4px rgba(255,255,255,0.1); letter-spacing: 1px;
-        }
-        #skills .section-content {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem;
-        }
-        #skills .skill-card {
-            background: linear-gradient(145deg, #111, #1a1a1a); border-radius: 16px; padding: 1.8rem;
-            box-shadow: 0 0 18px rgba(255,255,255,0.15); transition: all 0.3s ease; overflow: hidden;
-        }
-        #skills .skill-card:hover { transform: translateY(-6px); box-shadow: 0 0 25px rgba(255,255,255,0.35); }
-        #skills .skill-card h3 { color: #fff; font-size: 1.3rem; margin-bottom: 1rem; }
-        #skills .skill-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-        .tag { background: #1f2937; color: #d1d5db; padding: 6px 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; transition: background 0.3s ease; }
-        .tag:hover { background: #374151; }
+    /* Download CV */
+    .btn-cv {
+      display: inline-block; margin-top: 2rem; padding: 12px 24px; border-radius: 6px;
+      font-size: 1rem; font-weight: bold; color: #000; background: #fff; text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-cv i { margin-right: 8px; }
+    .btn-cv:hover { background: #111; color: #fff; transform: scale(1.05); }
 
-        /* Experience Section */
-        #experience { padding: 6rem 2rem; background: #0a0a0a; text-align: center; }
-        #experience h2 {
-            font-size: 3rem; font-weight: 900; font-family: 'Poppins', sans-serif; color: #e5e7eb; margin-bottom: 3rem;
-            text-shadow: 3px 3px 12px rgba(0,0,0,0.9), -2px -2px 6px rgba(255,255,255,0.1); letter-spacing: 1px;
-        }
-        #experience .section-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
-        #experience .exp-card {
-            background: linear-gradient(145deg, #111, #1a1a1a); padding: 2rem; border-radius: 18px; box-shadow: 0 0 20px rgba(255,255,255,0.18);
-            text-align: left; transition: all 0.3s ease;
-        }
-        #experience .exp-card:hover { transform: translateY(-8px); box-shadow: 0 0 28px rgba(255,255,255,0.35); }
-        #experience h3 { color: #fff; font-size: 1.5rem; margin-bottom: 0.8rem; font-weight: 700; }
-        #experience p { color: #9ca3af; font-size: 0.95rem; margin-bottom: 0.6rem; }
-        #experience ul { color: #d1d5db; font-size: 1rem; line-height: 1.6; padding-left: 1.2rem; }
+    /* Social */
+    .social-links { display: flex; gap: 1.5rem; margin-top: 3rem; justify-content: center; }
+    .social-links a {
+      font-size: 1.5rem; color: #bbb; border: 1px solid #1f2937; padding: 0.6rem; border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover { color: #fff; border-color: #2563eb; transform: scale(1.2); }
 
-        /* Projects Section */
-        #projects { padding: 6rem 2rem; background: #0a0a0a; text-align: center; }
-        #projects h2 {
-            font-size: 3rem; font-weight: 900; font-family: 'Poppins', sans-serif; color: #e5e7eb;
-            margin-bottom: 1.5rem; text-shadow: 3px 3px 12px rgba(0,0,0,0.9); letter-spacing: 1px;
-        }
-        /* Filter bar */
-        #projects .filter-bar {
-            display: flex; gap: 0.6rem; justify-content: center; align-items: center; margin-bottom: 1.6rem; flex-wrap: wrap;
-        }
-        #projects .filter-btn {
-            padding: 8px 12px; border-radius: 999px; border: 1px solid #2b3443; background: #111; color: #d1d5db;
-            cursor: pointer; font-weight: 600; transition: all 0.25s ease;
-        }
-        #projects .filter-btn:hover, #projects .filter-btn.active { background: #fff; color: #000; }
+    /* Education */
+    #education { padding: 6rem 2rem; background: #0f0f0f; text-align: center; }
+    #education h2 {
+      font-size: 3rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 2.5rem;
+      background: linear-gradient(to right, #fff, #9ca3af, #fff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      font-family: 'Poppins', sans-serif;
+    }
+    #education .card {
+      background: linear-gradient(145deg, #111, #1a1a1a); border-radius: 18px; padding: 2.5rem 3rem; max-width: 750px;
+      text-align: left; box-shadow: 0 0 25px rgba(59,130,246,0.25);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    #education .card:hover { transform: translateY(-8px); box-shadow: 0 0 35px rgba(59,130,246,0.45); }
 
-        #projects .projects-list { max-width: 1000px; margin: 0 auto; text-align: left; }
-        #projects .proj-item {
-            margin-bottom: 1.2rem; border-radius: 12px; padding: 1rem 1.5rem; background: #111; color: #fff; transition: all 0.3s ease;
-        }
-        #projects .proj-item:hover { box-shadow: 0 0 20px rgba(255,255,255,0.8); }
-        #projects .proj-item h3 {
-            font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
-        }
-        #projects .proj-item .date { color: #9ca3af; font-size: 0.85rem; margin-left: auto; }
-        #projects .proj-item div { margin-top: 1rem; font-size: 0.95rem; color: #d1d5db; line-height: 1.6; }
-        #projects .skills { margin-top: 0.5rem; font-weight: 500; }
+    /* Skills */
+    #skills { padding: 6rem 2rem; background: #0f0f0f; text-align: center; }
+    #skills h2 {
+      font-size: 2.8rem; font-weight: 800; margin-bottom: 3rem; font-family: 'Poppins', sans-serif;
+      color: #e5e7eb; text-shadow: 2px 2px 6px rgba(0,0,0,0.8), -1px -1px 4px rgba(255,255,255,0.1); letter-spacing: 1px;
+    }
+    #skills .section-content {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem;
+    }
+    #skills .skill-card {
+      background: linear-gradient(145deg, #111, #1a1a1a); border-radius: 16px; padding: 1.8rem;
+      box-shadow: 0 0 18px rgba(255,255,255,0.15); transition: all 0.3s ease; overflow: hidden;
+    }
+    #skills .skill-card:hover { transform: translateY(-6px); box-shadow: 0 0 25px rgba(255,255,255,0.35); }
+    #skills .skill-card h3 { color: #fff; font-size: 1.3rem; margin-bottom: 1rem; }
+    #skills .skill-list { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .tag { background: #1f2937; color: #d1d5db; padding: 6px 12px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; transition: background 0.3s ease; }
+    .tag:hover { background: #374151; }
 
-        /* Glow colors */
-        .orange-glow { box-shadow: 0 0 8px rgba(249,115,22,0.4); }
-        .orange-glow:hover { box-shadow: 0 0 20px rgba(249,115,22,0.8); }
-        .blue-glow { box-shadow: 0 0 8px rgba(59,130,246,0.4); }
-        .blue-glow:hover { box-shadow: 0 0 20px rgba(59,130,246,0.8); }
-        .green-glow { box-shadow: 0 0 8px rgba(16,185,129,0.4); }
-        .green-glow:hover { box-shadow: 0 0 20px rgba(16,185,129,0.8); }
-        .gold-glow { box-shadow: 0 0 8px rgba(234,179,8,0.4); }
-        .gold-glow:hover { box-shadow: 0 0 20px rgba(234,179,8,0.8); }
-        .pink-glow { box-shadow: 0 0 8px rgba(236,72,153,0.4); }
-        .pink-glow:hover { box-shadow: 0 0 20px rgba(236,72,153,0.8); }
-        .purple-glow { box-shadow: 0 0 8px rgba(139,92,246,0.4); }
-        .purple-glow:hover { box-shadow: 0 0 20px rgba(139,92,246,0.8); }
-        .red-glow { box-shadow: 0 0 8px rgba(239,68,68,0.4); }
-        .red-glow:hover { box-shadow: 0 0 20px rgba(239,68,68,0.8); }
+    /* Experience */
+    #experience { padding: 6rem 2rem; background: #0a0a0a; text-align: center; }
+    #experience h2 {
+      font-size: 3rem; font-weight: 900; font-family: 'Poppins', sans-serif; color: #e5e7eb; margin-bottom: 3rem;
+      text-shadow: 3px 3px 12px rgba(0,0,0,0.9), -2px -2px 6px rgba(255,255,255,0.1); letter-spacing: 1px;
+    }
+    #experience .section-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    #experience .exp-card {
+      background: linear-gradient(145deg, #111, #1a1a1a); padding: 2rem; border-radius: 18px; box-shadow: 0 0 20px rgba(255,255,255,0.18);
+      text-align: left; transition: all 0.3s ease;
+    }
+    #experience .exp-card:hover { transform: translateY(-8px); box-shadow: 0 0 28px rgba(255,255,255,0.35); }
+    #experience h3 { color: #fff; font-size: 1.5rem; margin-bottom: 0.8rem; font-weight: 700; }
+    #experience p { color: #9ca3af; font-size: 0.95rem; margin-bottom: 0.6rem; }
+    #experience ul { color: #d1d5db; font-size: 1rem; line-height: 1.6; padding-left: 1.2rem; }
 
-        /* Certifications Section */
-        #certifications { padding: 6rem 2rem; background: #0a0a0a; }
-        #certifications h2 {
-            font-size: 3rem; text-align: center; font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 4px; color: #fff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1); margin-bottom: 2rem;
-        }
-        .cert-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-        .cert-card {
-            background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; color: #ddd;
-            box-shadow: 0 0 15px rgba(255,255,255,0.05); transition: all 0.3s ease; position: relative;
-        }
-        .cert-card:hover { box-shadow: 0 0 25px rgba(255,255,255,0.15); }
-        .cert-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .cert-card .cred { font-size: 0.8rem; color: #888; }
-        .cert-card .tag {
-            display: inline-block; margin-top: 0.8rem; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-        }
-        .tech { box-shadow: 0 0 10px rgba(0,150,255,0.3); }
-        .tech:hover { box-shadow: 0 0 25px rgba(0,150,255,0.6); }
-        .tech .tag { background: rgba(0,150,255,0.2); color: #4da6ff; }
-        .safety { box-shadow: 0 0 10px rgba(0,255,100,0.3); }
-        .safety:hover { box-shadow: 0 0 25px rgba(0,255,100,0.6); }
-        .safety .tag { background: rgba(0,255,100,0.2); color: #33ff99; }
-        .english { box-shadow: 0 0 10px rgba(180,100,255,0.3); }
-        .english:hover { box-shadow: 0 0 25px rgba(180,100,255,0.6); }
-        .english .tag { background: rgba(180,100,255,0.2); color: #c299ff; }
-        .management { box-shadow: 0 0 10px rgba(255,200,0,0.3); }
-        .management:hover { box-shadow: 0 0 25px rgba(255,200,0,0.6); }
-        .management .tag { background: rgba(255,200,0,0.2); color: #ffdb4d; }
+    /* Projects */
+    #projects { padding: 6rem 2rem; background: #0a0a0a; text-align: center; }
+    #projects h2 {
+      font-size: 3rem; font-weight: 900; font-family: 'Poppins', sans-serif; color: #e5e7eb;
+      margin-bottom: 1.5rem; text-shadow: 3px 3px 12px rgba(0,0,0,0.9); letter-spacing: 1px;
+    }
+    #projects .filter-bar {
+      display: flex; gap: 0.6rem; justify-content: center; align-items: center; margin-bottom: 1.6rem; flex-wrap: wrap;
+    }
+    #projects .filter-btn {
+      padding: 8px 12px; border-radius: 999px; border: 1px solid #2b3443; background: #111; color: #d1d5db;
+      cursor: pointer; font-weight: 600; transition: all 0.25s ease;
+    }
+    #projects .filter-btn:hover, #projects .filter-btn.active { background: #fff; color: #000; }
+    #projects .projects-list { max-width: 1000px; margin: 0 auto; text-align: left; }
+    #projects .proj-item {
+      margin-bottom: 1.2rem; border-radius: 12px; padding: 1rem 1.5rem; background: #111; color: #fff; transition: all 0.3s ease;
+    }
+    #projects .proj-item:hover { box-shadow: 0 0 20px rgba(255,255,255,0.8); }
+    #projects .proj-item h3 {
+      font-size: 1.2rem; font-weight: 600; display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
+    }
+    #projects .proj-item .date { color: #9ca3af; font-size: 0.85rem; margin-left: auto; }
+    #projects .proj-item div { margin-top: 1rem; font-size: 0.95rem; color: #d1d5db; line-height: 1.6; }
+    #projects .skills { margin-top: 0.5rem; font-weight: 500; }
 
-        /* Leadership Section */
-        #leadership { padding: 6rem 2rem; background: #0f0f0f; }
-        #leadership h2 {
-            font-size: 3rem; text-align: center; font-family: 'Orbitron', sans-serif; color: #fff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1); margin-bottom: 2rem;
-        }
-        .leadership-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
-        .lead-card {
-            background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; color: #ddd; position: relative;
-            box-shadow: 0 0 15px rgba(255,255,255,0.05); transition: all 0.3s ease;
-        }
-        .lead-card:hover { box-shadow: 0 0 25px rgba(255,255,255,0.15); }
-        .lead-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
-        .lead-card .duration { font-size: 0.85rem; color: #aaa; margin-bottom: 0.5rem; }
-        .lead-card .skills { font-size: 0.85rem; color: #999; margin-top: 0.4rem; }
-        .lead-card .tag {
-            position: absolute; bottom: 12px; right: 15px; font-size: 0.65rem; padding: 4px 10px; border-radius: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
-        }
-        .lead-edu { box-shadow: 0 0 10px rgba(0,150,255,0.25); }
-        .lead-edu:hover { box-shadow: 0 0 25px rgba(0,150,255,0.6); }
-        .lead-edu .tag { background: rgba(0,150,255,0.2); color: #4da6ff; }
-        .lead-biz { box-shadow: 0 0 10px rgba(255,165,0,0.25); }
-        .lead-biz:hover { box-shadow: 0 0 25px rgba(255,165,0,0.6); }
-        .lead-biz .tag { background: rgba(255,165,0,0.2); color: #ffb84d; }
-        .lead-arts { box-shadow: 0 0 10px rgba(200,0,255,0.25); }
-        .lead-arts:hover { box-shadow: 0 0 25px rgba(200,0,255,0.6); }
-        .lead-arts .tag { background: rgba(200,0,255,0.2); color: #e699ff; }
-        .lead-lang { box-shadow: 0 0 10px rgba(0,255,180,0.25); }
-        .lead-lang:hover { box-shadow: 0 0 25px rgba(0,255,180,0.6); }
-        .lead-lang .tag { background: rgba(0,255,180,0.2); color: #33ffcc; }
+    /* Glow colors */
+    .orange-glow { box-shadow: 0 0 8px rgba(249,115,22,0.4); }
+    .orange-glow:hover { box-shadow: 0 0 20px rgba(249,115,22,0.8); }
+    .blue-glow { box-shadow: 0 0 8px rgba(59,130,246,0.4); }
+    .blue-glow:hover { box-shadow: 0 0 20px rgba(59,130,246,0.8); }
+    .green-glow { box-shadow: 0 0 8px rgba(16,185,129,0.4); }
+    .green-glow:hover { box-shadow: 0 0 20px rgba(16,185,129,0.8); }
+    .gold-glow { box-shadow: 0 0 8px rgba(234,179,8,0.4); }
+    .gold-glow:hover { box-shadow: 0 0 20px rgba(234,179,8,0.8); }
+    .pink-glow { box-shadow: 0 0 8px rgba(236,72,153,0.4); }
+    .pink-glow:hover { box-shadow: 0 0 20px rgba(236,72,153,0.8); }
+    .purple-glow { box-shadow: 0 0 8px rgba(139,92,246,0.4); }
+    .purple-glow:hover { box-shadow: 0 0 20px rgba(139,92,246,0.8); }
+    .red-glow { box-shadow: 0 0 8px rgba(239,68,68,0.4); }
+    .red-glow:hover { box-shadow: 0 0 20px rgba(239,68,68,0.8); }
 
-        /* Contact Section */
-        #contact { padding: 4rem 2rem; background: #0e0e0e; color: #fff; text-align: center; }
-        #contact h2 {
-            font-size: 2.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 2rem; font-weight: 700; letter-spacing: 2px;
-        }
-        #contact .section-content { max-width: 600px; margin: auto; }
-        #contact form { display: flex; flex-direction: column; gap: 1rem; }
-        #contact input, #contact textarea {
-            width: 100%; padding: 12px; border: 1px solid #333; background: #111; color: #fff; font-size: 1rem; border-radius: 5px;
-        }
-        #contact input:focus, #contact textarea:focus { border: 1px solid #666; outline: none; }
-        #contact button {
-            background: #fff; color: #111; padding: 12px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; transition: background 0.3s, color 0.3s;
-        }
-        #contact button i { margin-right: 8px; }
-        #contact button:hover { background: #111; color: #fff; border: 1px solid #fff; }
-        #contact .success-message {
-            display: none; margin-top: 1rem; font-weight: bold; color: #0f0; animation: fadeIn 0.5s ease-in;
-        }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        #contact .contact-links {
-            display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;
-        }
-        #contact .contact-links a { font-size: 1.4rem; color: #aaa; transition: transform 0.3s, color 0.3s; }
-        #contact .contact-links a:hover { color: #fff; transform: scale(1.2); }
+    /* Certifications */
+    #certifications { padding: 6rem 2rem; background: #0a0a0a; }
+    #certifications h2 {
+      font-size: 3rem; text-align: center; font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 4px; color: #fff;
+      text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1); margin-bottom: 2rem;
+    }
+    .cert-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .cert-card {
+      background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; color: #ddd;
+      box-shadow: 0 0 15px rgba(255,255,255,0.05); transition: all 0.3s ease; position: relative;
+    }
+    .cert-card:hover { box-shadow: 0 0 25px rgba(255,255,255,0.15); }
+    .cert-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .cert-card .cred { font-size: 0.8rem; color: #888; }
+    .cert-card .tag {
+      display: inline-block; margin-top: 0.8rem; padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    }
+    .tech { box-shadow: 0 0 10px rgba(0,150,255,0.3); }
+    .tech:hover { box-shadow: 0 0 25px rgba(0,150,255,0.6); }
+    .tech .tag { background: rgba(0,150,255,0.2); color: #4da6ff; }
+    .safety { box-shadow: 0 0 10px rgba(0,255,100,0.3); }
+    .safety:hover { box-shadow: 0 0 25px rgba(0,255,100,0.6); }
+    .safety .tag { background: rgba(0,255,100,0.2); color: #33ff99; }
+    .english { box-shadow: 0 0 10px rgba(180,100,255,0.3); }
+    .english:hover { box-shadow: 0 0 25px rgba(180,100,255,0.6); }
+    .english .tag { background: rgba(180,100,255,0.2); color: #c299ff; }
+    .management { box-shadow: 0 0 10px rgba(255,200,0,0.3); }
+    .management:hover { box-shadow: 0 0 25px rgba(255,200,0,0.6); }
+    .management .tag { background: rgba(255,200,0,0.2); color: #ffdb4d; }
 
-        /* Footer */
-        footer { padding: 2rem; text-align: center; background: #000; color: #666; border-top: 1px solid #1a1a1a; }
+    /* Leadership */
+    #leadership { padding: 6rem 2rem; background: #0f0f0f; }
+    #leadership h2 {
+      font-size: 3rem; text-align: center; font-family: 'Orbitron', sans-serif; color: #fff;
+      text-shadow: 0 0 15px rgba(255,255,255,0.2), 0 0 40px rgba(255,255,255,0.1); margin-bottom: 2rem;
+    }
+    .leadership-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+    .lead-card {
+      background: #111; border: 1px solid #222; border-radius: 12px; padding: 1.5rem; color: #ddd; position: relative;
+      box-shadow: 0 0 15px rgba(255,255,255,0.05); transition: all 0.3s ease;
+    }
+    .lead-card:hover { box-shadow: 0 0 25px rgba(255,255,255,0.15); }
+    .lead-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+    .lead-card .duration { font-size: 0.85rem; color: #aaa; margin-bottom: 0.5rem; }
+    .lead-card .skills { font-size: 0.85rem; color: #999; margin-top: 0.4rem; }
+    .lead-card .tag {
+      position: absolute; bottom: 12px; right: 15px; font-size: 0.65rem; padding: 4px 10px; border-radius: 15px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold;
+    }
+    .lead-edu { box-shadow: 0 0 10px rgba(0,150,255,0.25); }
+    .lead-edu:hover { box-shadow: 0 0 25px rgba(0,150,255,0.6); }
+    .lead-edu .tag { background: rgba(0,150,255,0.2); color: #4da6ff; }
+    .lead-biz { box-shadow: 0 0 10px rgba(255,165,0,0.25); }
+    .lead-biz:hover { box-shadow: 0 0 25px rgba(255,165,0,0.6); }
+    .lead-biz .tag { background: rgba(255,165,0,0.2); color: #ffb84d; }
+    .lead-arts { box-shadow: 0 0 10px rgba(200,0,255,0.25); }
+    .lead-arts:hover { box-shadow: 0 0 25px rgba(200,0,255,0.6); }
+    .lead-arts .tag { background: rgba(200,0,255,0.2); color: #e699ff; }
+    .lead-lang { box-shadow: 0 0 10px rgba(0,255,180,0.25); }
+    .lead-lang:hover { box-shadow: 0 0 25px rgba(0,255,180,0.6); }
+    .lead-lang .tag { background: rgba(0,255,180,0.2); color: #33ffcc; }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            header { padding: 1rem; padding-top: 100px; }
-            header h1 { font-size: 2.2rem; letter-spacing: 2px; }
-            header h2 { font-size: 1.1rem; margin-bottom: 2rem; }
-            .cards { flex-direction: column; align-items: center; gap: 1.5rem; }
-            .card { width: 100%; max-width: 350px; }
-            .social-links { gap: 2rem; margin-top: 2rem; }
-            .social-links a { font-size: 1.3rem; padding: 0.8rem; }
-            #education .card { padding: 1.5rem 2rem; }
-            #skills .skill-card { padding: 1.2rem; }
-            #experience .exp-card { padding: 1.5rem; }
-            #projects .projects-list { padding: 0 1rem; }
-            #contact form { padding: 0 1rem; }
-        }
-        @media (max-width: 480px) {
-            header h1 { font-size: 1.8rem; }
-            .card { padding: 1.2rem; }
-            .btn-cv { padding: 10px 20px; font-size: 0.9rem; }
-            #education h2 { font-size: 2.5rem; }
-            #skills h2 { font-size: 2.2rem; }
-            #experience h2, #projects h2, #certifications h2, #leadership h2 { font-size: 2.5rem; }
-            #contact h2 { font-size: 2rem; }
-        }
-    </style>
+    /* Contact */
+    #contact { padding: 4rem 2rem; background: #0e0e0e; color: #fff; text-align: center; }
+    #contact h2 {
+      font-size: 2.5rem; font-family: 'Orbitron', sans-serif; margin-bottom: 2rem; font-weight: 700; letter-spacing: 2px;
+    }
+    #contact .section-content { max-width: 600px; margin: auto; }
+    #contact form { display: flex; flex-direction: column; gap: 1rem; }
+    #contact input, #contact textarea {
+      width: 100%; padding: 12px; border: 1px solid #333; background: #111; color: #fff; font-size: 1rem; border-radius: 5px;
+    }
+    #contact input:focus, #contact textarea:focus { border: 1px solid #666; outline: none; }
+    #contact button {
+      background: #fff; color: #111; padding: 12px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; transition: background 0.3s, color 0.3s;
+    }
+    #contact button i { margin-right: 8px; }
+    #contact button:hover { background: #111; color: #fff; border: 1px solid #fff; }
+    #contact .success-message {
+      display: none; margin-top: 1rem; font-weight: bold; color: #0f0; animation: fadeIn 0.5s ease-in;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    #contact .contact-links {
+      display: flex; justify-content: center; gap: 1.5rem; margin-top: 3rem;
+    }
+    #contact .contact-links a { font-size: 1.4rem; color: #aaa; transition: transform 0.3s, color 0.3s; }
+    #contact .contact-links a:hover { color: #fff; transform: scale(1.2); }
+
+    /* Footer */
+    footer { padding: 2rem; text-align: center; background: #000; color: #666; border-top: 1px solid #1a1a1a; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      header { padding: 1rem; padding-top: 100px; }
+      header h1 { font-size: 2.2rem; letter-spacing: 2px; }
+      header h2 { font-size: 1.1rem; margin-bottom: 2rem; }
+      .cards { flex-direction: column; align-items: center; gap: 1.5rem; }
+      .card { width: 100%; max-width: 350px; }
+      .social-links { gap: 2rem; margin-top: 2rem; }
+      .social-links a { font-size: 1.3rem; padding: 0.8rem; }
+      #education .card { padding: 1.5rem 2rem; }
+      #skills .skill-card { padding: 1.2rem; }
+      #experience .exp-card { padding: 1.5rem; }
+      #projects .projects-list { padding: 0 1rem; }
+      #contact form { padding: 0 1rem; }
+    }
+    @media (max-width: 480px) {
+      header h1 { font-size: 1.8rem; }
+      .card { padding: 1.2rem; }
+      .btn-cv { padding: 10px 20px; font-size: 0.9rem; }
+      #education h2 { font-size: 2.5rem; }
+      #skills h2 { font-size: 2.2rem; }
+      #experience h2, #projects h2, #certifications h2, #leadership h2 { font-size: 2.5rem; }
+      #contact h2 { font-size: 2rem; }
+
+      /* prevent long project titles from forcing horizontal scroll */
+      #projects .proj-item h3 { flex-wrap: wrap; }
+      #projects .proj-item .date {
+        margin-left: 0;
+        flex-basis: 100%;
+      }
+    }
+    @media (max-width: 400px) {
+      nav { padding: 12px 12px; }
+      .hamburger span { width: 22px; }
+    }
+
+    /* Toggle brand text for tiny phones */
+    .brand-short { display: none; }
+    @media (max-width: 480px) {
+      .brand-full { display: none; }
+      .brand-short { display: inline; }
+      .nav-logo { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav>
-        <a href="#" class="nav-logo">Abdullah Arslan</a>
-        <ul class="nav-links">
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#certifications">Certifications</a></li>
-            <li><a href="#leadership">Leadership</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-    <!-- Overlay for mobile nav -->
-    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo" aria-label="Home">
+      <span class="brand-full">Abdullah Alias Arslan</span>
+      <span class="brand-short">Abdullah A.</span>
+    </a>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile">
-        <ul>
-            <li><a href="#education" onclick="closeNav()">Education</a></li>
-            <li><a href="#skills" onclick="closeNav()">Skills</a></li>
-            <li><a href="#experience" onclick="closeNav()">Experience</a></li>
-            <li><a href="#projects" onclick="closeNav()">Projects</a></li>
-            <li><a href="#certifications" onclick="closeNav()">Certifications</a></li>
-            <li><a href="#leadership" onclick="closeNav()">Leadership</a></li>
-            <li><a href="assets/Abdullah_Arslan_CV.pdf" target="_blank" rel="noopener" onclick="closeNav()">Resume</a></li>
-            <li><a href="#contact" onclick="closeNav()">Contact</a></li>
-        </ul>
+    <ul class="nav-links">
+      <li><a href="#education">Education</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Overlay for mobile nav -->
+  <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
+
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile">
+    <ul>
+      <li><a href="#education" onclick="closeNav()">Education</a></li>
+      <li><a href="#skills" onclick="closeNav()">Skills</a></li>
+      <li><a href="#experience" onclick="closeNav()">Experience</a></li>
+      <li><a href="#projects" onclick="closeNav()">Projects</a></li>
+      <li><a href="#certifications" onclick="closeNav()">Certifications</a></li>
+      <li><a href="#leadership" onclick="closeNav()">Leadership</a></li>
+      <li><a href="assets/Abdullah_Arslan_CV.pdf" target="_blank" rel="noopener" onclick="closeNav()">Resume</a></li>
+      <li><a href="#contact" onclick="closeNav()">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- Header Section -->
+  <header>
+    <div class="intro">
+      <h1>Abdullah Alias Arslan</h1>
+      <h2>Industrial Automation & Embedded Systems Engineer</h2>
     </div>
 
-    <!-- Header Section -->
-    <header>
-        <div class="intro">
-            <h1>Abdullah Alias Arslan</h1>
-            <h2>Industrial Automation & Embedded Systems Engineer</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon" style="color:#3b82f6;"><i class="fas fa-microchip"></i></div>
+        <h3>Automation Projects</h3>
+        <p>10+ PLC/SCADA solutions implemented with Siemens TIA Portal for industrial process optimization.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="color:#10b981;"><i class="fas fa-robot"></i></div>
+        <h3>Embedded Systems</h3>
+        <p>IoT, ESP32, Arduino, FPGA & Verilog development with real-time monitoring capabilities.</p>
+      </div>
+      <div class="card">
+        <div class="icon" style="color:#f59e0b;"><i class="fas fa-brain"></i></div>
+        <h3>AI & Robotics</h3>
+        <p>Worked on machine learning, robotics, and AI integration for smart automation solutions.</p>
+      </div>
+    </div>
+
+    <a href="assets/Abdullah_Arslan_CV.pdf" download class="btn-cv">
+      <i class="fas fa-download"></i> Download CV
+    </a>
+
+    <div class="social-links">
+      <a href="tel:+923298462392" title="Call"><i class="fas fa-mobile-alt"></i></a>
+      <a href="mailto:abdullah.ar.work@gmail.com" title="Email"><i class="fas fa-at"></i></a>
+      <a href="https://www.linkedin.com/in/abdullah-junejo" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </header>
+
+  <!-- Education Section -->
+  <section id="education">
+    <h2><i class="fas fa-graduation-cap" style="color:#3b82f6; margin-right: 12px;"></i> Education</h2>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <div class="card">
+        <h3><i class="fas fa-university" style="color:#10b981; margin-right: 8px;"></i> B.E. Electrical Engineering (Electronics)</h3>
+        <p>Sukkur IBA University <span style="color:#6b7280;">| 2021 – 2025</span></p>
+        <hr style="border: none; height: 1px; background: #1f2937; margin: 1.2rem 0;">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="color:#e5e7eb; margin-bottom: 0.8rem; font-size: 1.05rem;">🎓 SEEF Scholarship Awardee</li>
+          <li style="color:#e5e7eb; font-size: 1.05rem;">⭐ 100% Merit Scholarship – Top 5 Rank in University Entry Test</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="section-content">
+      <div class="skill-card">
+        <h3><i class="fas fa-cogs" style="color:#3b82f6; margin-right:8px;"></i> Automation & Control</h3>
+        <div class="skill-list">
+          <span class="tag">PLC/SCADA</span>
+          <span class="tag">Siemens TIA Portal</span>
+          <span class="tag">Process Control</span>
+          <span class="tag">HMI Design</span>
         </div>
-
-        <!-- Cinematic Cards -->
-        <div class="cards">
-            <div class="card">
-                <div class="icon" style="color:#3b82f6;"><i class="fas fa-microchip"></i></div>
-                <h3>Automation Projects</h3>
-                <p>10+ PLC/SCADA solutions implemented with Siemens TIA Portal for industrial process optimization.</p>
-            </div>
-            <div class="card">
-                <div class="icon" style="color:#10b981;"><i class="fas fa-robot"></i></div>
-                <h3>Embedded Systems</h3>
-                <p>IoT, ESP32, Arduino, FPGA & Verilog development with real-time monitoring capabilities.</p>
-            </div>
-            <div class="card">
-                <div class="icon" style="color:#f59e0b;"><i class="fas fa-brain"></i></div>
-                <h3>AI & Robotics</h3>
-                <p>Worked on machine learning, robotics, and AI integration for smart automation solutions.</p>
-            </div>
+      </div>
+      <div class="skill-card">
+        <h3><i class="fas fa-microchip" style="color:#10b981; margin-right:8px;"></i> Embedded Systems</h3>
+        <div class="skill-list">
+          <span class="tag">ESP32</span>
+          <span class="tag">Arduino</span>
+          <span class="tag">Embedded C</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">FPGA</span>
+          <span class="tag">IoT Integration</span>
+          <span class="tag">Verilog HDL</span>
         </div>
-
-        <!-- Download CV Button -->
-        <a href="assets/Abdullah_Arslan_CV.pdf" download class="btn-cv">
-            <i class="fas fa-download"></i> Download CV
-        </a>
-
-        <!-- Social Links -->
-        <div class="social-links">
-            <a href="tel:+923298462392" title="Call"><i class="fas fa-mobile-alt"></i></a>
-            <a href="mailto:abdullah.ar.work@gmail.com" title="Email"><i class="fas fa-at"></i></a>
-            <a href="https://www.linkedin.com/in/abdullah-junejo" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <div class="skill-card">
+        <h3><i class="fas fa-robot" style="color:#ef4444; margin-right:8px;"></i> AI & Robotics</h3>
+        <div class="skill-list">
+          <span class="tag">Machine Learning</span>
+          <span class="tag">Artificial Intelligence</span>
+          <span class="tag">Deep Learning</span>
+          <span class="tag">Robotics</span>
+          <span class="tag">TensorFlow</span>
         </div>
-    </header>
-
-    <!-- Education Section -->
-    <section id="education">
-        <h2><i class="fas fa-graduation-cap" style="color:#3b82f6; margin-right: 12px;"></i> Education</h2>
-        <div style="display: flex; justify-content: center; align-items: center;">
-            <div class="card">
-                <h3><i class="fas fa-university" style="color:#10b981; margin-right: 8px;"></i> B.E. Electrical Engineering (Electronics)</h3>
-                <p>Sukkur IBA University <span style="color:#6b7280;">| 2021 – 2025</span></p>
-                <hr style="border: none; height: 1px; background: #1f2937; margin: 1.2rem 0;">
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="color:#e5e7eb; margin-bottom: 0.8rem; font-size: 1.05rem;">🎓 SEEF Scholarship Awardee</li>
-                    <li style="color:#e5e7eb; font-size: 1.05rem;">⭐ 100% Merit Scholarship – Top 5 Rank in University Entry Test</li>
-                </ul>
-            </div>
+      </div>
+      <div class="skill-card">
+        <h3><i class="fas fa-laptop-code" style="color:#a855f7; margin-right:8px;"></i> Software & Tools</h3>
+        <div class="skill-list">
+          <span class="tag">Python</span>
+          <span class="tag">C++</span>
+          <span class="tag">OOP</span>
+          <span class="tag">NI Multisim</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">EAGLE</span>
+          <span class="tag">Proteus</span>
+          <span class="tag">LabVIEW</span>
+          <span class="tag">Ansys HFSS</span>
         </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <h2>Technical Skills</h2>
-        <div class="section-content">
-            <div class="skill-card">
-                <h3><i class="fas fa-cogs" style="color:#3b82f6; margin-right:8px;"></i> Automation & Control</h3>
-                <div class="skill-list">
-                    <span class="tag">PLC/SCADA</span>
-                    <span class="tag">Siemens TIA Portal</span>
-                    <span class="tag">Process Control</span>
-                    <span class="tag">HMI Design</span>
-                </div>
-            </div>
-            <div class="skill-card">
-                <h3><i class="fas fa-microchip" style="color:#10b981; margin-right:8px;"></i> Embedded Systems</h3>
-                <div class="skill-list">
-                    <span class="tag">ESP32</span>
-                    <span class="tag">Arduino</span>
-                    <span class="tag">Embedded C</span>
-                    <span class="tag">Raspberry Pi</span>
-                    <span class="tag">FPGA</span>
-                    <span class="tag">IoT Integration</span>
-                    <span class="tag">Verilog HDL</span>
-                </div>
-            </div>
-            <div class="skill-card">
-                <h3><i class="fas fa-robot" style="color:#ef4444; margin-right:8px;"></i> AI & Robotics</h3>
-                <div class="skill-list">
-                    <span class="tag">Machine Learning</span>
-                    <span class="tag">Artificial Intelligence</span>
-                    <span class="tag">Deep Learning</span>
-                    <span class="tag">Robotics</span>
-                    <span class="tag">TensorFlow</span>
-                </div>
-            </div>
-            <div class="skill-card">
-                <h3><i class="fas fa-laptop-code" style="color:#a855f7; margin-right:8px;"></i> Software & Tools</h3>
-                <div class="skill-list">
-                    <span class="tag">Python</span>
-                    <span class="tag">C++</span>
-                    <span class="tag">OOP</span>
-                    <span class="tag">NI Multisim</span>
-                    <span class="tag">MATLAB</span>
-                    <span class="tag">AutoCAD</span>
-                    <span class="tag">EAGLE</span>
-                    <span class="tag">Proteus</span>
-                    <span class="tag">LabVIEW</span>
-                    <span class="tag">Ansys HFSS</span>
-                </div>
-            </div>
-            <div class="skill-card">
-                <h3><i class="fas fa-wrench" style="color:#f59e0b; margin-right:8px;"></i> Core Concepts</h3>
-                <div class="skill-list">
-                    <span class="tag">Process Control</span>
-                    <span class="tag">Industrial Instrumentation</span>
-                    <span class="tag">Circuit Simulation</span>
-                    <span class="tag">Electrical Safety</span>
-                </div>
-            </div>
+      </div>
+      <div class="skill-card">
+        <h3><i class="fas fa-wrench" style="color:#f59e0b; margin-right:8px;"></i> Core Concepts</h3>
+        <div class="skill-list">
+          <span class="tag">Process Control</span>
+          <span class="tag">Industrial Instrumentation</span>
+          <span class="tag">Circuit Simulation</span>
+          <span class="tag">Electrical Safety</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Experience Section -->
-    <section id="experience">
-        <h2>Experience</h2>
-        <div class="section-content">
-            <div class="exp-card">
-                <h3><i class="fas fa-bolt" style="color:#facc15; margin-right:10px;"></i> Intern – Protection & Instrumentation, SEPCO</h3>
-                <p>Sukkur, Sindh | June 2025 – July 2025</p>
-                <ul>
-                    <li>Managed fault response and preventive maintenance across 7+ substations and grid points</li>
-                    <li>Conducted relay tests and safety compliance inspections for 50+ electrical components</li>
-                </ul>
-            </div>
-            <div class="exp-card">
-                <h3><i class="fas fa-code" style="color:#3b82f6; margin-right:10px;"></i> Embedded Systems Trainee – Emertxe</h3>
-                <p>Online Learning Program, Remote | May 2025 – June 2025</p>
-                <ul>
-                    <li>Mastered Embedded C and PIC microcontroller programming (Timers, Interrupts, CLCD interfacing+)</li>
-                    <li>Designed and deployed 5+ embedded systems with real-time monitoring and verified 100% functionality</li>
-                </ul>
-            </div>
-            <div class="exp-card">
-                <h3><i class="fas fa-globe" style="color:#10b981; margin-right:10px;"></i> Embedded & IoT Developer – Fiverr</h3>
-                <p>Freelancer, Remote | Feb 2024 – Dec 2024</p>
-                <ul>
-                    <li>Delivered 11+ automation/IoT solutions for global clients with 95% positive feedback</li>
-                    <li>Created Python-based control scripts & web dashboards for remote monitoring, improving efficiency by 40%</li>
-                </ul>
-            </div>
+  <!-- Experience Section -->
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="section-content">
+      <div class="exp-card">
+        <h3><i class="fas fa-bolt" style="color:#facc15; margin-right:10px;"></i> Intern – Protection & Instrumentation, SEPCO</h3>
+        <p>Sukkur, Sindh | June 2025 – July 2025</p>
+        <ul>
+          <li>Managed fault response and preventive maintenance across 7+ substations and grid points</li>
+          <li>Conducted relay tests and safety compliance inspections for 50+ electrical components</li>
+        </ul>
+      </div>
+      <div class="exp-card">
+        <h3><i class="fas fa-code" style="color:#3b82f6; margin-right:10px;"></i> Embedded Systems Trainee – Emertxe</h3>
+        <p>Online Learning Program, Remote | May 2025 – June 2025</p>
+        <ul>
+          <li>Mastered Embedded C and PIC microcontroller programming (Timers, Interrupts, CLCD interfacing+)</li>
+          <li>Designed and deployed 5+ embedded systems with real-time monitoring and verified 100% functionality</li>
+        </ul>
+      </div>
+      <div class="exp-card">
+        <h3><i class="fas fa-globe" style="color:#10b981; margin-right:10px;"></i> Embedded & IoT Developer – Fiverr</h3>
+        <p>Freelancer, Remote | Feb 2024 – Dec 2024</p>
+        <ul>
+          <li>Delivered 11+ automation/IoT solutions for global clients with 95% positive feedback</li>
+          <li>Created Python-based control scripts & web dashboards for remote monitoring, improving efficiency by 40%</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2><i class="fas fa-project-diagram" style="color:#f97316; margin-right:12px;"></i> Projects</h2>
+
+    <div class="filter-bar" role="tablist" aria-label="Filter projects">
+      <button class="filter-btn active" data-filter="all" aria-selected="true">All</button>
+      <button class="filter-btn" data-filter="automation">Automation (PLC/SCADA)</button>
+      <button class="filter-btn" data-filter="embedded">Embedded/FPGA</button>
+      <button class="filter-btn" data-filter="ai">AI/ML</button>
+    </div>
+
+    <div class="projects-list">
+      <div class="proj-item green-glow" data-cat="embedded">
+        <h3><i class="fas fa-robot"></i> Autonomous Line & Light Following Robot with Obstacle Detection <span class="date">April 2025 – April 2025</span></h3>
+        <div>
+          <ul>
+            <li>Designed PCB in Eagle, fabricated custom Arduino board.</li>
+            <li>Integrated IR + ultrasonic sensors.</li>
+            <li>Programmed autonomous navigation.</li>
+          </ul>
+          <p class="skills">Robotics • PCB Design • Arduino</p>
         </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2><i class="fas fa-project-diagram" style="color:#f97316; margin-right:12px;"></i> Projects</h2>
-
-        <!-- Filter bar -->
-        <div class="filter-bar" role="tablist" aria-label="Filter projects">
-            <button class="filter-btn active" data-filter="all" aria-selected="true">All</button>
-            <button class="filter-btn" data-filter="automation">Automation (PLC/SCADA)</button>
-            <button class="filter-btn" data-filter="embedded">Embedded/FPGA</button>
-            <button class="filter-btn" data-filter="ai">AI/ML</button>
+      </div>
+      <div class="proj-item purple-glow" data-cat="automation">
+        <h3><i class="fas fa-door-open"></i> Motion Activated Door Control System <span class="date">Nov 2024 – Nov 2024</span></h3>
+        <div>
+          <ul>
+            <li>PLC-based touchless door system with sensors.</li>
+            <li>Limit switches + auto-close delay.</li>
+          </ul>
+          <p class="skills">PLC • Automation • Sensors</p>
         </div>
-
-        <div class="projects-list">
-            <div class="proj-item green-glow" data-cat="embedded">
-                <h3><i class="fas fa-robot"></i> Autonomous Line & Light Following Robot with Obstacle Detection <span class="date">April 2025 – April 2025</span></h3>
-                <div>
-                    <ul>
-                        <li>Designed PCB in Eagle, fabricated custom Arduino board.</li>
-                        <li>Integrated IR + ultrasonic sensors.</li>
-                        <li>Programmed autonomous navigation.</li>
-                    </ul>
-                    <p class="skills">Robotics • PCB Design • Arduino</p>
-                </div>
-            </div>
-            <div class="proj-item purple-glow" data-cat="automation">
-                <h3><i class="fas fa-door-open"></i> Motion Activated Door Control System <span class="date">Nov 2024 – Nov 2024</span></h3>
-                <div>
-                    <ul>
-                        <li>PLC-based touchless door system with sensors.</li>
-                        <li>Limit switches + auto-close delay.</li>
-                    </ul>
-                    <p class="skills">PLC • Automation • Sensors</p>
-                </div>
-            </div>
-            <div class="proj-item red-glow" data-cat="ai">
-                <h3><i class="fas fa-shield-alt"></i> ScamScanner – AI Scam Detection App <span class="date">Oct 2024 – Oct 2024</span></h3>
-                <div>
-                    <ul>
-                        <li>AI app for scam detection using NLP + OCR.</li>
-                        <li>Risk scoring system.</li>
-                        <li>Accessible UI for all users.</li>
-                    </ul>
-                    <p class="skills">AI • NLP • Cybersecurity</p>
-                </div>
-            </div>
-            <div class="proj-item pink-glow" data-cat="ai">
-                <h3><i class="fas fa-prescription-bottle-alt"></i> Medicam AI – Medicine Recognition <span class="date">Nov 2024 – Dec 2024</span></h3>
-                <div>
-                    <ul>
-                        <li>AI medicine recognition app using OpenCV & TensorFlow.</li>
-                        <li>Neural network for classification.</li>
-                        <li>User-friendly healthcare app.</li>
-                    </ul>
-                    <p class="skills">AI • Computer Vision • TensorFlow</p>
-                </div>
-            </div>
-            <div class="proj-item gold-glow" data-cat="embedded">
-                <h3><i class="fas fa-microchip"></i> FPGA-Based Secure File Access Control <span class="date">Dec 2024</span></h3>
-                <div>
-                    <ul>
-                        <li>Hardware security using Verilog on FPGA.</li>
-                        <li>Secure key authentication with multi-level access.</li>
-                        <li>Force_lock override for emergency restrictions.</li>
-                    </ul>
-                    <p class="skills">FPGA • Verilog • Cybersecurity</p>
-                </div>
-            </div>
-            <div class="proj-item blue-glow" data-cat="embedded">
-                <h3><i class="fas fa-car"></i> Mobile-Controlled Car Using ESP32 <span class="date">May 2024</span></h3>
-                <div>
-                    <ul>
-                        <li>Built IoT car with ESP32 + Blynk platform.</li>
-                        <li>Smartphone-controlled over WiFi.</li>
-                        <li>Integrated L298N motor driver.</li>
-                    </ul>
-                    <p class="skills">IoT • ESP32 • Wireless Control</p>
-                </div>
-            </div>
-            <div class="proj-item orange-glow" data-cat="automation embedded">
-                <h3><i class="fas fa-bolt"></i> Design & Development of Power Quality Analyzer (HIL) <span class="date">Aug 2024 – Jun 2025</span></h3>
-                <div>
-                    <ul>
-                        <li>Developed analyzer using NI cDAQ for RMS, frequency, THD monitoring.</li>
-                        <li>Implemented Hardware-in-the-Loop (HIL) for dynamic loads.</li>
-                        <li>Added sag/swell analysis and inrush detection.</li>
-                    </ul>
-                    <p class="skills">Embedded Systems • HIL Testing • Power Quality Analysis</p>
-                </div>
-            </div>
+      </div>
+      <div class="proj-item red-glow" data-cat="ai">
+        <h3><i class="fas fa-shield-alt"></i> ScamScanner – AI Scam Detection App <span class="date">Oct 2024 – Oct 2024</span></h3>
+        <div>
+          <ul>
+            <li>AI app for scam detection using NLP + OCR.</li>
+            <li>Risk scoring system.</li>
+            <li>Accessible UI for all users.</li>
+          </ul>
+          <p class="skills">AI • NLP • Cybersecurity</p>
         </div>
-    </section>
-
-    <!-- Certifications Section -->
-    <section id="certifications">
-        <h2><i class="fas fa-certificate"></i> Certifications</h2>
-        <div class="cert-list">
-            <div class="cert-card tech">
-                <h3><i class="fas fa-code"></i> Crash Course on Python</h3>
-                <p>Google | Coursera, Issued Apr 2025</p>
-                <p class="cred">Credential ID: NZAJKXLWJBOU</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card english">
-                <h3><i class="fas fa-language"></i> EF SET English Certificate 67/100 (C1 Advanced)</h3>
-                <p>EF SET, Issued Apr 2025</p>
-                <span class="tag">English</span>
-            </div>
-            <div class="cert-card safety">
-                <h3><i class="fas fa-hard-hat"></i> Introduction to OSHA: Safety Standards and Compliance</h3>
-                <p>Coursera, Issued Apr 2025</p>
-                <p class="cred">Credential ID: 2VJTWLGIEWJ2</p>
-                <span class="tag">Safety</span>
-            </div>
-            <div class="cert-card management">
-                <h3><i class="fas fa-tasks"></i> MEAL Essentials Certificate</h3>
-                <p>Cornerstone OnDemand Foundation, Issued Apr 2025</p>
-                <span class="tag">Management</span>
-            </div>
-            <div class="cert-card safety">
-                <h3><i class="fas fa-bolt"></i> Safety in the Utility Industry</h3>
-                <p>University At Buffalo & SUNY | Coursera, Issued Apr 2025</p>
-                <p class="cred">Credential ID: OGZUJNK17ICR</p>
-                <span class="tag">Safety</span>
-            </div>
-            <div class="cert-card english">
-                <h3><i class="fas fa-comments"></i> English for Common Interactions in the Workplace</h3>
-                <p>Pontificia Universidad Católica de Chile | Coursera, Issued Mar 2025</p>
-                <span class="tag">English</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fas fa-brain"></i> Artificial Intelligence</h3>
-                <p>HP LIFE, Issued Feb 2025</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card management">
-                <h3><i class="fas fa-comments"></i> HP Communication Clarity</h3>
-                <p>HP LIFE, Issued Feb 2025</p>
-                <span class="tag">Management</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fas fa-code"></i> Programming for Everybody (Getting Started with Python)</h3>
-                <p>University of Michigan | Coursera, Issued Jan 2025</p>
-                <p class="cred">Credential ID: 1J35Q59OWL7J</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fas fa-database"></i> Python Data Structures</h3>
-                <p>University of Michigan | Coursera, Issued Jan 2025</p>
-                <p class="cred">Credential ID: 0ETSO6RM3R1Q</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fab fa-aws"></i> AWS Cloud Practitioner Essentials</h3>
-                <p>Amazon Web Services (AWS) | Coursera, Issued Dec 2024</p>
-                <p class="cred">Credential ID: 2CX7R7HO41RA</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card management">
-                <h3><i class="fas fa-project-diagram"></i> Initiating and Planning Projects</h3>
-                <p>UCI | Coursera, Issued Dec 2024</p>
-                <p class="cred">Credential ID: ZIP352EEURHR</p>
-                <span class="tag">Management</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fas fa-wifi"></i> Introduction to the Internet of Things and Embedded Systems</h3>
-                <p>UCI | Coursera, Issued Dec 2024</p>
-                <p class="cred">Credential ID: B0ZPFMSXKGLM</p>
-                <span class="tag">Tech</span>
-            </div>
-            <div class="cert-card tech">
-                <h3><i class="fas fa-robot"></i> Supervised Machine Learning: Regression and Classification</h3>
-                <p>Stanford University | Coursera, Issued 2024</p>
-                <p class="cred">Credential ID: ALU9RKEDKS8U</p>
-                <span class="tag">Tech</span>
-            </div>
+      </div>
+      <div class="proj-item pink-glow" data-cat="ai">
+        <h3><i class="fas fa-prescription-bottle-alt"></i> Medicam AI – Medicine Recognition <span class="date">Nov 2024 – Dec 2024</span></h3>
+        <div>
+          <ul>
+            <li>AI medicine recognition app using OpenCV & TensorFlow.</li>
+            <li>Neural network for classification.</li>
+            <li>User-friendly healthcare app.</li>
+          </ul>
+          <p class="skills">AI • Computer Vision • TensorFlow</p>
         </div>
-    </section>
-
-    <!-- Leadership Section -->
-    <section id="leadership">
-        <h2><i class="fas fa-users"></i> Leadership & Languages</h2>
-        <div class="leadership-list">
-            <div class="lead-card lead-edu">
-                <h3><i class="fas fa-star"></i> IEEE Campus Ambassador – Sukkur IBA University</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Aug 2024 – Jun 2025</p>
-                <p>Organized <b>8+ technical workshops</b> for 200+ students, boosting student engagement by 15%.</p>
-                <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Leadership</span>
-            </div>
-
-            <div class="lead-card blue-glow">
-                <h3><i class="fas fa-project-diagram"></i> Project Executive – SIBAMUN 3.0</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Jan 2025 · 1 mo</p>
-                <p>Executed and managed <b>SIBAMUN 3.0</b>, fostering global problem-solving, peacebuilding, and leadership among participants.</p>
-                <p style="font-size:0.85rem; color:#999; margin-top:0.4rem;">Skills: Event Management · Leadership · People Management · Time Management</p>
-                <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Event Leadership</span>
-            </div>
-
-            <div class="lead-card purple-glow">
-                <h3><i class="fas fa-book"></i> Event Volunteer – Pakistan Literature Festival (PLF Sukkur)</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Oct 2023 · 1 mo</p>
-                <p>Volunteered as a <b>Jaan Nisar</b>, ensuring smooth coordination, promoting arts, literature, and cultural heritage.</p>
-                <span class="tag" style="background: rgba(200,0,255,0.2); color: #e699ff; position:absolute; bottom:12px; right:15px;">Arts & Culture</span>
-            </div>
-
-            <div class="lead-card blue-glow">
-                <h3><i class="fas fa-microchip"></i> Event Organizer – IEEE SCONEST 2022</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Nov 2022 · 1 mo</p>
-                <p>Supported logistics for <b>IEEE Student Conference on Engineering, Science & Technology (SCONEST)</b>, facilitating collaboration between students and professionals.</p>
-                <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Education</span>
-            </div>
-
-            <div class="lead-card orange-glow">
-                <h3><i class="fas fa-store"></i> Event Organizer – 6th Ek Din Sale Ka</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Nov 2024 · 1 mo</p>
-                <p>Led entrepreneurship fair with <b>100+ student businesses</b>, managing logistics, registrations, and promotions. Received recognition from CELInc for successful execution.</p>
-                <span class="tag" style="background: rgba(255,165,0,0.2); color: #ffb84d; position:absolute; bottom:12px; right:15px;">Entrepreneurship</span>
-            </div>
-
-            <div class="lead-card blue-glow">
-                <h3><i class="fas fa-chalkboard-teacher"></i> Conference Volunteer – 4th iCoMET</h3>
-                <p style="color:#aaa; margin-bottom:0.5rem;">Feb 2023 · 1 mo</p>
-                <p>Supported Industry-Academia conference logistics, speaker management, and promotions, gaining insights into collaborative research practices.</p>
-                <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Conference</span>
-            </div>
-
-            <div class="lead-card green-glow">
-                <h3><i class="fas fa-language"></i> Languages</h3>
-                <p><b>English</b> (C1 Advanced – EF SET Certified), <b>Urdu</b> (Native), <b>Chinese</b> (Basic)</p>
-                <span class="tag" style="background: rgba(0,255,180,0.2); color: #33ffcc; position:absolute; bottom:12px; right:15px;">Languages</span>
-            </div>
+      </div>
+      <div class="proj-item gold-glow" data-cat="embedded">
+        <h3><i class="fas fa-microchip"></i> FPGA-Based Secure File Access Control <span class="date">Dec 2024</span></h3>
+        <div>
+          <ul>
+            <li>Hardware security using Verilog on FPGA.</li>
+            <li>Secure key authentication with multi-level access.</li>
+            <li>Force_lock override for emergency restrictions.</li>
+          </ul>
+          <p class="skills">FPGA • Verilog • Cybersecurity</p>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2><i class="fas fa-envelope-open-text"></i> Contact</h2>
-        <div class="section-content">
-            <form id="contact-form" action="https://formspree.io/f/mqalvokb" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="text" name="subject" placeholder="Subject" required>
-                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
-            </form>
-
-            <div id="success-message" class="success-message">
-                ✔ Thank you! You will receive a reply within 24 hours.
-            </div>
-
-            <div class="contact-links">
-                <a href="tel:+923298462392" title="Call"><i class="fas fa-mobile-alt"></i></a>
-                <a href="mailto:abdullah.ar.work@gmail.com" title="Email"><i class="fas fa-at"></i></a>
-                <a href="https://www.linkedin.com/in/abdullah-junejo" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            </div>
+      </div>
+      <div class="proj-item blue-glow" data-cat="embedded">
+        <h3><i class="fas fa-car"></i> Mobile-Controlled Car Using ESP32 <span class="date">May 2024</span></h3>
+        <div>
+          <ul>
+            <li>Built IoT car with ESP32 + Blynk platform.</li>
+            <li>Smartphone-controlled over WiFi.</li>
+            <li>Integrated L298N motor driver.</li>
+          </ul>
+          <p class="skills">IoT • ESP32 • Wireless Control</p>
         </div>
-    </section>
+      </div>
+      <div class="proj-item orange-glow" data-cat="automation embedded">
+        <h3><i class="fas fa-bolt"></i> Design & Development of Power Quality Analyzer (HIL) <span class="date">Aug 2024 – Jun 2025</span></h3>
+        <div>
+          <ul>
+            <li>Developed analyzer using NI cDAQ for RMS, frequency, THD monitoring.</li>
+            <li>Implemented Hardware-in-the-Loop (HIL) for dynamic loads.</li>
+            <li>Added sag/swell analysis and inrush detection.</li>
+          </ul>
+          <p class="skills">Embedded Systems • HIL Testing • Power Quality Analysis</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Abdullah Alias Arslan. All rights reserved.</p>
-    </footer>
+  <!-- Certifications Section -->
+  <section id="certifications">
+    <h2><i class="fas fa-certificate"></i> Certifications</h2>
+    <div class="cert-list">
+      <div class="cert-card tech">
+        <h3><i class="fas fa-code"></i> Crash Course on Python</h3>
+        <p>Google | Coursera, Issued Apr 2025</p>
+        <p class="cred">Credential ID: NZAJKXLWJBOU</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card english">
+        <h3><i class="fas fa-language"></i> EF SET English Certificate 67/100 (C1 Advanced)</h3>
+        <p>EF SET, Issued Apr 2025</p>
+        <span class="tag">English</span>
+      </div>
+      <div class="cert-card safety">
+        <h3><i class="fas fa-hard-hat"></i> Introduction to OSHA: Safety Standards and Compliance</h3>
+        <p>Coursera, Issued Apr 2025</p>
+        <p class="cred">Credential ID: 2VJTWLGIEWJ2</p>
+        <span class="tag">Safety</span>
+      </div>
+      <div class="cert-card management">
+        <h3><i class="fas fa-tasks"></i> MEAL Essentials Certificate</h3>
+        <p>Cornerstone OnDemand Foundation, Issued Apr 2025</p>
+        <span class="tag">Management</span>
+      </div>
+      <div class="cert-card safety">
+        <h3><i class="fas fa-bolt"></i> Safety in the Utility Industry</h3>
+        <p>University At Buffalo & SUNY | Coursera, Issued Apr 2025</p>
+        <p class="cred">Credential ID: OGZUJNK17ICR</p>
+        <span class="tag">Safety</span>
+      </div>
+      <div class="cert-card english">
+        <h3><i class="fas fa-comments"></i> English for Common Interactions in the Workplace</h3>
+        <p>Pontificia Universidad Católica de Chile | Coursera, Issued Mar 2025</p>
+        <span class="tag">English</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fas fa-brain"></i> Artificial Intelligence</h3>
+        <p>HP LIFE, Issued Feb 2025</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card management">
+        <h3><i class="fas fa-comments"></i> HP Communication Clarity</h3>
+        <p>HP LIFE, Issued Feb 2025</p>
+        <span class="tag">Management</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fas fa-code"></i> Programming for Everybody (Getting Started with Python)</h3>
+        <p>University of Michigan | Coursera, Issued Jan 2025</p>
+        <p class="cred">Credential ID: 1J35Q59OWL7J</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fas fa-database"></i> Python Data Structures</h3>
+        <p>University of Michigan | Coursera, Issued Jan 2025</p>
+        <p class="cred">Credential ID: 0ETSO6RM3R1Q</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fab fa-aws"></i> AWS Cloud Practitioner Essentials</h3>
+        <p>Amazon Web Services (AWS) | Coursera, Issued Dec 2024</p>
+        <p class="cred">Credential ID: 2CX7R7HO41RA</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card management">
+        <h3><i class="fas fa-project-diagram"></i> Initiating and Planning Projects</h3>
+        <p>UCI | Coursera, Issued Dec 2024</p>
+        <p class="cred">Credential ID: ZIP352EEURHR</p>
+        <span class="tag">Management</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fas fa-wifi"></i> Introduction to the Internet of Things and Embedded Systems</h3>
+        <p>UCI | Coursera, Issued Dec 2024</p>
+        <p class="cred">Credential ID: B0ZPFMSXKGLM</p>
+        <span class="tag">Tech</span>
+      </div>
+      <div class="cert-card tech">
+        <h3><i class="fas fa-robot"></i> Supervised Machine Learning: Regression and Classification</h3>
+        <p>Stanford University | Coursera, Issued 2024</p>
+        <p class="cred">Credential ID: ALU9RKEDKS8U</p>
+        <span class="tag">Tech</span>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Mobile Navigation Toggle with overlay + body scroll lock
-        const hamburger = document.getElementById('hamburger');
-        const mobileNav = document.getElementById('mobileNav');
-        const navOverlay = document.getElementById('navOverlay');
+  <!-- Leadership Section -->
+  <section id="leadership">
+    <h2><i class="fas fa-users"></i> Leadership & Languages</h2>
+    <div class="leadership-list">
+      <div class="lead-card lead-edu">
+        <h3><i class="fas fa-star"></i> IEEE Campus Ambassador – Sukkur IBA University</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Aug 2024 – Jun 2025</p>
+        <p>Organized <b>8+ technical workshops</b> for 200+ students, boosting student engagement by 15%.</p>
+        <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Leadership</span>
+      </div>
 
-        function openNav() {
-            hamburger.classList.add('active');
-            hamburger.setAttribute('aria-expanded', 'true');
-            mobileNav.classList.add('active');
-            navOverlay.classList.add('active');
-            document.body.classList.add('no-scroll');
+      <div class="lead-card blue-glow">
+        <h3><i class="fas fa-project-diagram"></i> Project Executive – SIBAMUN 3.0</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Jan 2025 · 1 mo</p>
+        <p>Executed and managed <b>SIBAMUN 3.0</b>, fostering global problem-solving, peacebuilding, and leadership among participants.</p>
+        <p style="font-size:0.85rem; color:#999; margin-top:0.4rem;">Skills: Event Management · Leadership · People Management · Time Management</p>
+        <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Event Leadership</span>
+      </div>
+
+      <div class="lead-card purple-glow">
+        <h3><i class="fas fa-book"></i> Event Volunteer – Pakistan Literature Festival (PLF Sukkur)</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Oct 2023 · 1 mo</p>
+        <p>Volunteered as a <b>Jaan Nisar</b>, ensuring smooth coordination, promoting arts, literature, and cultural heritage.</p>
+        <span class="tag" style="background: rgba(200,0,255,0.2); color: #e699ff; position:absolute; bottom:12px; right:15px;">Arts & Culture</span>
+      </div>
+
+      <div class="lead-card blue-glow">
+        <h3><i class="fas fa-microchip"></i> Event Organizer – IEEE SCONEST 2022</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Nov 2022 · 1 mo</p>
+        <p>Supported logistics for <b>IEEE Student Conference on Engineering, Science & Technology (SCONEST)</b>, facilitating collaboration between students and professionals.</p>
+        <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Education</span>
+      </div>
+
+      <div class="lead-card orange-glow">
+        <h3><i class="fas fa-store"></i> Event Organizer – 6th Ek Din Sale Ka</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Nov 2024 · 1 mo</p>
+        <p>Led entrepreneurship fair with <b>100+ student businesses</b>, managing logistics, registrations, and promotions. Received recognition from CELInc for successful execution.</p>
+        <span class="tag" style="background: rgba(255,165,0,0.2); color: #ffb84d; position:absolute; bottom:12px; right:15px;">Entrepreneurship</span>
+      </div>
+
+      <div class="lead-card blue-glow">
+        <h3><i class="fas fa-chalkboard-teacher"></i> Conference Volunteer – 4th iCoMET</h3>
+        <p style="color:#aaa; margin-bottom:0.5rem;">Feb 2023 · 1 mo</p>
+        <p>Supported Industry-Academia conference logistics, speaker management, and promotions, gaining insights into collaborative research practices.</p>
+        <span class="tag" style="background: rgba(0,150,255,0.2); color: #4da6ff; position:absolute; bottom:12px; right:15px;">Conference</span>
+      </div>
+
+      <div class="lead-card green-glow">
+        <h3><i class="fas fa-language"></i> Languages</h3>
+        <p><b>English</b> (C1 Advanced – EF SET Certified), <b>Urdu</b> (Native), <b>Chinese</b> (Basic)</p>
+        <span class="tag" style="background: rgba(0,255,180,0.2); color: #33ffcc; position:absolute; bottom:12px; right:15px;">Languages</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2><i class="fas fa-envelope-open-text"></i> Contact</h2>
+    <div class="section-content">
+      <form id="contact-form" action="https://formspree.io/f/mqalvokb" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required />
+        <input type="email" name="email" placeholder="Your Email" required />
+        <input type="text" name="subject" placeholder="Subject" required />
+        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Send Message</button>
+      </form>
+
+      <div id="success-message" class="success-message">
+        ✔ Thank you! You will receive a reply within 24 hours.
+      </div>
+
+      <div class="contact-links">
+        <a href="tel:+923298462392" title="Call"><i class="fas fa-mobile-alt"></i></a>
+        <a href="mailto:abdullah.ar.work@gmail.com" title="Email"><i class="fas fa-at"></i></a>
+        <a href="https://www.linkedin.com/in/abdullah-junejo" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Abdullah Alias Arslan. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Mobile Navigation Toggle with overlay + body scroll lock
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function openNav() {
+      hamburger.classList.add('active');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileNav.classList.add('active');
+      navOverlay.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeNav() {
+      hamburger.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileNav.classList.remove('active');
+      navOverlay.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
+
+    function toggleNav() {
+      if (mobileNav.classList.contains('active')) closeNav();
+      else openNav();
+    }
+
+    hamburger.addEventListener('click', toggleNav);
+    navOverlay.addEventListener('click', closeNav);
+
+    // Close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('active')) closeNav();
+    });
+
+    // Close when clicking outside menu but not on hamburger or menu
+    document.addEventListener('click', function(event) {
+      const isInside = hamburger.contains(event.target) || mobileNav.contains(event.target);
+      if (!isInside && mobileNav.classList.contains('active')) {
+        closeNav();
+      }
+    });
+
+    // Close navigation on window resize to desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) closeNav();
+    });
+
+    // Contact form handling
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = this;
+      fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          document.getElementById('success-message').style.display = 'block';
+          setTimeout(() => {
+            document.getElementById('success-message').style.display = 'none';
+          }, 5000);
+        } else {
+          alert('Error sending message. Please try again.');
         }
+      }).catch(() => alert('Error sending message. Please try again.'));
+    });
 
-        function closeNav() {
-            hamburger.classList.remove('active');
-            hamburger.setAttribute('aria-expanded', 'false');
-            mobileNav.classList.remove('active');
-            navOverlay.classList.remove('active');
-            document.body.classList.remove('no-scroll');
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          closeNav(); // also close the mobile nav after clicking
         }
+      });
+    });
 
-        function toggleNav() {
-            if (mobileNav.classList.contains('active')) closeNav(); else openNav();
-        }
+    // Project filtering
+    const filterButtons = document.querySelectorAll('#projects .filter-btn');
+    const projectItems = document.querySelectorAll('#projects .proj-item');
 
-        hamburger.addEventListener('click', toggleNav);
-        navOverlay.addEventListener('click', closeNav);
+    function applyProjectFilter(filter) {
+      filterButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === filter);
+        if (btn.dataset.filter === 'all' && filter === 'all') btn.classList.add('active');
+      });
+      projectItems.forEach(item => {
+        const cats = (item.dataset.cat || '').split(' ');
+        item.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
+      });
+    }
 
-        // Close on ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileNav.classList.contains('active')) closeNav();
-        });
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => applyProjectFilter(btn.dataset.filter));
+    });
 
-        // Close when clicking outside menu but not on hamburger or menu
-        document.addEventListener('click', function(event) {
-            const isInside = hamburger.contains(event.target) || mobileNav.contains(event.target);
-            if (!isInside && mobileNav.classList.contains('active')) {
-                closeNav();
-            }
-        });
-
-        // Close navigation on window resize to desktop
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) closeNav();
-        });
-
-        // Contact form handling
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const form = this;
-            fetch(form.action, {
-                method: "POST",
-                body: new FormData(form),
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    form.reset();
-                    document.getElementById('success-message').style.display = 'block';
-                    setTimeout(() => {
-                        document.getElementById('success-message').style.display = 'none';
-                    }, 5000);
-                } else {
-                    alert('Error sending message. Please try again.');
-                }
-            }).catch(() => alert('Error sending message. Please try again.'));
-        });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        // Project filtering
-        const filterButtons = document.querySelectorAll('#projects .filter-btn');
-        const projectItems = document.querySelectorAll('#projects .proj-item');
-
-        function applyProjectFilter(filter) {
-            filterButtons.forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === filter);
-                if (btn.dataset.filter === 'all' && filter === 'all') btn.classList.add('active');
-            });
-            projectItems.forEach(item => {
-                const cats = (item.dataset.cat || '').split(' ');
-                item.style.display = (filter === 'all' || cats.includes(filter)) ? '' : 'none';
-            });
-        }
-
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => applyProjectFilter(btn.dataset.filter));
-        });
-
-        // Default to "All"
-        applyProjectFilter('all');
-    </script>
+    // Default to "All"
+    applyProjectFilter('all');
+  </script>
 </body>
 </html>
