@@ -468,9 +468,10 @@
       </div>
     </div>
 
-    <a href="assets/Abdullah_Arslan_CV.pdf" download class="btn-cv">
-      <i class="fas fa-download"></i> Download CV
-    </a>
+  <a href="assets/Abdullah_Arslan_CV.pdf" download class="btn-cv">
+  <i class="fas fa-download"></i> Download CV
+</a>
+
 
     <div class="social-links">
       <a href="tel:+923298462392" title="Call"><i class="fas fa-mobile-alt"></i></a>
@@ -952,5 +953,19 @@
     // Default to "All"
     applyProjectFilter('all');
   </script>
+
+
+<div id="shipable_agent_chatbox"></div>
+<script defer="defer" src="https://app.shipable.ai/agent-chat/chatbox.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    window.AgentChatboxSDK.init({
+      container: "shipable_agent_chatbox",
+      paramKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0SWQiOjQyNzAsImlhdCI6MTc1NjQ1MTU1M30.89Qu7Zi77EqXtC4frCXvaYrB_ybjHQpVl6aHuqy_eD0",
+    });
+  });
+</script>
+
+
 </body>
 </html>
