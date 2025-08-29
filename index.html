@@ -955,16 +955,67 @@
   </script>
 
 
-<div id="shipable_agent_chatbox"></div>
+<!-- Chatbot Launcher with Waving Hand -->
+<div id="chat-launcher">
+  <div id="shipable_agent_chatbox"></div>
+  <span id="wave">👋</span>
+</div>
+
+<!-- Shipable Chatbot Script -->
 <script defer="defer" src="https://app.shipable.ai/agent-chat/chatbox.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
+    // Initialize chatbot
     window.AgentChatboxSDK.init({
       container: "shipable_agent_chatbox",
       paramKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0SWQiOjQyNzAsImlhdCI6MTc1NjQ1MTU1M30.89Qu7Zi77EqXtC4frCXvaYrB_ybjHQpVl6aHuqy_eD0",
     });
+
+    // Handle waving hand
+    const launcher = document.getElementById("chat-launcher");
+    const wave = document.getElementById("wave");
+
+    launcher.addEventListener("click", () => {
+      wave.style.display = "none"; // 👋 disappears after first click
+    });
   });
 </script>
+
+<!-- Styles -->
+<style>
+  #chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #shipable_agent_chatbox {
+    position: relative;
+    z-index: 2; /* chatbot stays clickable */
+  }
+
+  #wave {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 22px;
+    animation: waveAnim 1.5s infinite;
+    z-index: 3;
+  }
+
+  @keyframes waveAnim {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(20deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+  }
+</style>
+
 
 
 </body>
